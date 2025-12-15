@@ -21,20 +21,13 @@ body{
   transition:background 1.5s ease;
 }
 
-/* ✨ GLASSMORPHISM */
+/* GLASS */
 .glass{
-  background:linear-gradient(
-    135deg,
-    rgba(255,255,255,0.18),
-    rgba(255,255,255,0.05)
-  );
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.05));
   backdrop-filter:blur(30px);
-  -webkit-backdrop-filter:blur(30px);
   border-radius:36px;
   border:1px solid rgba(255,255,255,.35);
-  box-shadow:
-    0 25px 60px rgba(255,100,200,.35),
-    inset 0 0 30px rgba(255,255,255,.1);
+  box-shadow:0 25px 60px rgba(255,100,200,.35);
   padding:60px 90px;
   text-align:center;
   color:#fff;
@@ -45,7 +38,6 @@ body{
 h1,h2{
   font-family:'Playfair Display',serif;
   text-shadow:0 0 25px rgba(255,120,180,.8);
-  line-height:1.2;
 }
 
 button{
@@ -59,10 +51,7 @@ button{
   color:#fff;
   cursor:pointer;
   box-shadow:0 12px 36px rgba(123,47,247,.45);
-  transition:.3s;
-  font-family:'Montserrat',sans-serif;
 }
-button:hover{transform:translateY(-3px)}
 
 .delayed{opacity:0;pointer-events:none;transition:1s}
 .delayed.active{opacity:1;pointer-events:auto}
@@ -77,14 +66,12 @@ section{
 
 canvas{position:absolute;inset:0;pointer-events:none}
 
-#journeyText{font-size:52px;opacity:0;transition:2s}
-.hbText{font-size:54px;opacity:0;transition:1.5s}
+#journeyText,.hbText{opacity:0;transition:1.5s}
 
 #cakeImage{
   width:320px;
   margin:30px 0;
   border-radius:32px;
-  box-shadow:0 18px 60px rgba(255,180,200,.4)
 }
 
 .candle-lit{animation:glow 1.8s infinite alternate}
@@ -93,14 +80,13 @@ canvas{position:absolute;inset:0;pointer-events:none}
   50%{box-shadow:0 0 80px #ffd1dc}
 }
 
-/* ❤️ HEARTS */
+/* HEARTS */
 .heartParticle{
   position:absolute;
   bottom:-40px;
   font-size:26px;
   animation:float 12s linear forwards;
   color:#ffb3d9;
-  pointer-events:none;
 }
 @keyframes float{
   to{transform:translateY(-130vh);opacity:0}
@@ -111,34 +97,26 @@ canvas{position:absolute;inset:0;pointer-events:none}
   display:none;
   align-items:center;
   justify-content:center;
-  gap:50px;
+  gap:40px;
 }
 .memory-photo img{
-  width:360px;
-  max-width:100%;
-  border-radius:30px;
+  width:260px;
+  border-radius:24px;
 }
 .memory-quote{
-  font-size:40px;
-  font-family:'Playfair Display',serif;
-  line-height:1.4;
-  max-width:400px;
+  font-size:24px;
+  max-width:420px;
 }
 
-.blink-heart{font-size:75px;margin-top:20px;animation:blink 1.5s infinite}
-@keyframes blink{50%{opacity:.2}}
-
-/* 📱 MOBILE */
+/* MOBILE */
 @media(max-width:600px){
-  .glass{width:92%;padding:28px 20px;border-radius:24px}
+  .glass{width:92%;padding:28px 20px}
   h1{font-size:26px}
   h2{font-size:22px}
-  #journeyText{font-size:26px}
-  .hbText{font-size:28px}
   #cakeImage{width:210px}
-  .memory-slide{flex-direction:column;gap:20px}
+  .memory-slide{flex-direction:column}
   .memory-photo img{width:220px}
-  .memory-quote{font-size:22px}
+  .memory-quote{font-size:20px;text-align:center}
 }
 </style>
 </head>
@@ -168,7 +146,7 @@ canvas{position:absolute;inset:0;pointer-events:none}
   <canvas id="partyFireworks"></canvas>
   <div class="glass">
     <h1>Welcome to Your Special Night 🎉</h1>
-    <button id="continueBtn" class="delayed">Let's celebrate →</button>
+    <button id="continueBtn" class="delayed">Continue →</button>
   </div>
 </section>
 
@@ -182,9 +160,9 @@ canvas{position:absolute;inset:0;pointer-events:none}
 <section id="birthdayPage">
   <canvas id="birthdayFireworks"></canvas>
   <div class="glass">
-    <h1 id="hb1" class="hbText">Happy Birthday My dear</h1>
+    <h1 id="hb1" class="hbText">Happy Birthday</h1>
     <h2 id="hb2" class="hbText">Vahi ❤️</h2>
-    <button id="birthdayNext" class="delayed">Let's celebrate →</button>
+    <button id="birthdayNext" class="delayed">Continue →</button>
   </div>
 </section>
 
@@ -203,56 +181,32 @@ canvas{position:absolute;inset:0;pointer-events:none}
       <div class="memory-photo"><img src="assets/images/m1.jpg"></div>
     </div>
     <div class="memory-slide">
-      <div class="memory-quote">Thank you for supporting me even when I was distant.</div>
+      <div class="memory-quote">Thank you for supporting me always.</div>
       <div class="memory-photo"><img src="assets/images/m2.jpg"></div>
     </div>
     <div class="memory-slide">
-      <div class="memory-quote">May happiness stay with you always.</div>
+      <div class="memory-quote">May happiness stay with you forever.</div>
       <div class="memory-photo"><img src="assets/images/m3.jpg"></div>
     </div>
-    <button id="memoryNext" class="delayed">Continue Journey →</button>
+    <button id="memoryNext" class="delayed">Continue →</button>
   </div>
 </section>
 
 <section id="creditsPage">
   <div class="glass">
-    <h1>Forever Yours</h1>
-    <div class="blink-heart">❤️</div>
+    <h1>Forever Yours ❤️</h1>
+    <button id="endBtn">The End 🎵</button>
   </div>
 </section>
 
 <script>
 const $=id=>document.getElementById(id);
-
-/* ELEMENTS */
-const lightsPage=$('lightsPage');
-const countdownPage=$('countdownPage');
-const partyPage=$('partyPage');
-const journeyPage=$('journeyPage');
-const birthdayPage=$('birthdayPage');
-const cakeSection=$('cakeSection');
-const memoriesPage=$('memoriesPage');
-const creditsPage=$('creditsPage');
-
-const turnLightsBtn=$('turnLightsBtn');
-const startBtn=$('startBtn');
-const continueBtn=$('continueBtn');
-const walkBtn=$('walkBtn');
-const birthdayNext=$('birthdayNext');
-const cakeActionBtn=$('cakeActionBtn');
-const memoryNext=$('memoryNext');
-
-const simpleCountdown=$('simpleCountdown');
-const journeyText=$('journeyText');
-const hb1=$('hb1');
-const hb2=$('hb2');
-const cakeImage=$('cakeImage');
 const bgMusic=$('bgMusic');
 
-/* ❤️ HEARTS */
-let heartInterval;
+/* HEARTS */
+let heartInt;
 function startHearts(){
-  heartInterval=setInterval(()=>{
+  heartInt=setInterval(()=>{
     const h=document.createElement('div');
     h.className='heartParticle';
     h.textContent='❤️';
@@ -261,18 +215,18 @@ function startHearts(){
     setTimeout(()=>h.remove(),12000);
   },700);
 }
-function stopHearts(){clearInterval(heartInterval);}
+function stopHearts(){clearInterval(heartInt);}
 
-/* 🎆 FIREWORKS */
+/* FIREWORKS */
 function fireworks(c){
   const x=c.getContext('2d');
   c.width=innerWidth;c.height=innerHeight;
   const p=[];
   setInterval(()=>{
     const a=Math.random()*c.width,b=Math.random()*c.height/2;
-    for(let i=0;i<70;i++)
+    for(let i=0;i<60;i++)
       p.push({x:a,y:b,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,l:100});
-  },800);
+  },900);
   (function anim(){
     x.clearRect(0,0,c.width,c.height);
     p.forEach((e,i)=>{
@@ -287,20 +241,21 @@ function fireworks(c){
 
 /* FLOW */
 turnLightsBtn.onclick=()=>{
-  document.body.style.background='linear-gradient(135deg,#1b0033,#3a0ca3,#7209b7,#b5179e,#f72585)';
+  document.body.style.background='linear-gradient(135deg,#1b0033,#7209b7,#f72585)';
   lightsPage.style.display='none';
   countdownPage.style.display='flex';
 
-  /* ✅ FIXED COUNTDOWN */
   let count=3;
-  simpleCountdown.textContent=count;
+  simpleCountdown.textContent=3;
+  startBtn.classList.remove('active');
 
   const timer=setInterval(()=>{
     count--;
     simpleCountdown.textContent=count;
-    if(count===1){
+
+    if(count===0){
       clearInterval(timer);
-      startBtn.classList.add('active');
+      setTimeout(()=>startBtn.classList.add('active'),600);
     }
   },1200);
 };
@@ -317,7 +272,7 @@ continueBtn.onclick=()=>{
   partyPage.style.display='none';
   journeyPage.style.display='flex';
   startHearts();
-  setTimeout(()=>journeyText.style.opacity=1,600);
+  journeyText.style.opacity=1;
   setTimeout(()=>walkBtn.classList.add('active'),2000);
 };
 
@@ -326,9 +281,9 @@ walkBtn.onclick=()=>{
   journeyPage.style.display='none';
   birthdayPage.style.display='flex';
   fireworks(birthdayFireworks);
-  setTimeout(()=>hb1.style.opacity=1,600);
-  setTimeout(()=>hb2.style.opacity=1,1200);
-  setTimeout(()=>birthdayNext.classList.add('active'),2400);
+  hb1.style.opacity=1;
+  hb2.style.opacity=1;
+  setTimeout(()=>birthdayNext.classList.add('active'),2000);
 };
 
 birthdayNext.onclick=()=>{
@@ -361,6 +316,11 @@ function showMemory(n){
 memoryNext.onclick=()=>{
   idx++;
   idx<slides.length?showMemory(idx):(memoriesPage.style.display='none',creditsPage.style.display='flex');
+};
+
+endBtn.onclick=()=>{
+  bgMusic.pause();
+  bgMusic.currentTime=0;
 };
 </script>
 
