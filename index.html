@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Birthday Journey 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:background 1.5s ease;
+}
+
+.glass{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(28px);
+  border-radius:36px;
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 25px 60px rgba(255,100,200,.3);
+  padding:60px 90px;
+  text-align:center;
+  color:#fff;
+  max-width:900px;
+}
+
+h1,h2{
+  font-family:'Playfair Display',serif;
+  text-shadow:0 0 25px rgba(255,120,180,.8);
+  line-height:1.2;
+}
+
+button{
+  padding:14px 36px;
+  margin-top:24px;
+  border:none;
+  border-radius:50px;
+  font-size:16px;
+  font-weight:700;
+  background:linear-gradient(135deg,#7b2ff7,#9d4edd,#c77dff);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 12px 36px rgba(123,47,247,.45);
+  transition:.3s;
+  font-family:'Montserrat',sans-serif;
+}
+button:hover{transform:translateY(-3px)}
+
+.delayed{opacity:0;pointer-events:none;transform:translateY(20px);transition:1s}
+.delayed.active{opacity:1;pointer-events:auto;transform:none}
+
+section{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+canvas{position:absolute;inset:0;pointer-events:none}
+
+#journeyText{
+  font-size:52px;
+  opacity:0;
+  transform:scale(.6);
+  transition:2s;
+}
+
+.hbText{
+  font-size:54px;
+  opacity:0;
+  transition:1.5s;
+}
+
+#cakeImage{
+  width:320px;
+  margin:30px 0;
+  border-radius:32px;
+  box-shadow:0 18px 60px rgba(255,180,200,.4)
+}
+
+.candle-lit{animation:glow 1.8s infinite alternate}
+@keyframes glow{
+  0%,100%{box-shadow:0 0 40px #ff9adf}
+  50%{box-shadow:0 0 80px #ffd1dc}
+}
+
+/* ❤️ Hearts ONLY for journey page */
+.heartParticle{
+  position:absolute;
+  bottom:-40px;
+  font-size:26px;
+  animation:float 12s linear forwards;
+  color:#ffb3d9;
+  pointer-events:none;
+}
+@keyframes float{
+  to{transform:translateY(-130vh) translateX(60px);opacity:0}
+}
+
+.memory-slide{display:none;align-items:center;gap:50px}
+.memory-photo img{width:360px;border-radius:36px;box-shadow:0 25px 60px rgba(255,180,200,.5)}
+.memory-quote{font-size:40px;font-family:'Playfair Display',serif;line-height:1.4}
+
+.blink-heart{font-size:75px;margin-top:20px;animation:blink 1.5s infinite}
+@keyframes blink{50%{opacity:.2}}
+
+@media(max-width:900px){
+  .glass{padding:40px}
+  .memory-slide{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="assets/music/track2-piano.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LIGHTS -->
+<section id="lightsPage" style="display:flex">
+  <div class="glass">
+    <h1>hey, Vahi</h1>
+    <button id="turnLightsBtn" class="delayed active">Let's turn on the Lights 💡</button>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="countdownPage">
+  <div class="glass">
+    <h1>Something Magical Awaits 💖</h1>
+    <div id="simpleCountdown" style="font-size:100px;margin:30px">4</div>
+    <button id="startBtn" class="delayed">Let's play music</button>
+  </div>
+</section>
+
+<!-- PARTY (🎆 FIREWORKS ONLY HERE) -->
+<section id="partyPage">
+  <canvas id="partyFireworks"></canvas>
+  <div class="glass">
+    <h1>Welcome to Your Special Night 🎉</h1>
+    <button id="continueBtn" class="delayed">Let's celebrate →</button>
+  </div>
+</section>
+
+<!-- JOURNEY (❤️ HEARTS ONLY HERE) -->
+<section id="journeyPage">
+  <div class="glass">
+    <h1 id="journeyText">With Love, Care & Endless Smiles ❤️</h1>
+    <button id="walkBtn" class="delayed">Walk With Me →</button>
+  </div>
+</section>
+
+<!-- BIRTHDAY (🎆 FIREWORKS ONLY HERE) -->
+<section id="birthdayPage">
+  <canvas id="birthdayFireworks"></canvas>
+  <div class="glass">
+    <h1 id="hb1" class="hbText">Happy Birthday My dear</h1>
+    <h2 id="hb2" class="hbText"> Vahi ❤️</h2>
+    <button id="birthdayNext" class="delayed">Let's celebrate →</button>
+  </div>
+</section>
+
+<!-- CAKE -->
+<section id="cakeSection">
+  <div class="glass">
+    <h1>Make a Wish</h1>
+    <img id="cakeImage" src="assets/images/cake-normal.png">
+    <button id="cakeActionBtn">Light the Cake</button>
+  </div>
+</section>
+
+<!-- MEMORIES -->
+<section id="memoriesPage">
+  <div class="glass">
+    <div class="memory-slide">
+      <div class="memory-quote">Sorry for the moments I couldn’t give.</div>
+      <div class="memory-photo"><img src="assets/images/m1.jpg"></div>
+    </div>
+    <div class="memory-slide">
+      <div class="memory-quote">Thank you for supporting me even when i was distant.</div>
+      <div class="memory-photo"><img src="assets/images/m2.jpg"></div>
+    </div>
+    <div class="memory-slide">
+      <div class="memory-quote">May happiness stay with you always.</div>
+      <div class="memory-photo"><img src="assets/images/m3.jpg"></div>
+    </div>
+    <button id="memoryNext" class="delayed">Continue Journey →</button>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section id="creditsPage">
+  <div class="glass">
+    <h1>Forever Yours</h1>
+    <div class="blink-heart">❤️</div>
+  </div>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+
+const bgMusic=$('bgMusic');
+
+/* ❤️ HEARTS ONLY FOR JOURNEY PAGE */
+let heartInterval;
+function startHearts(){
+  heartInterval=setInterval(()=>{
+    const h=document.createElement('div');
+    h.className='heartParticle';
+    h.textContent='❤️';
+    h.style.left=Math.random()*100+'vw';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),12000);
+  },700);
+}
+function stopHearts(){
+  clearInterval(heartInterval);
+}
+
+turnLightsBtn.onclick=()=>{
+  document.body.style.background='linear-gradient(135deg,#1b0033,#3a0ca3,#7209b7,#b5179e,#f72585)';
+  lightsPage.style.display='none';
+  countdownPage.style.display='flex';
+};
+
+let c=3;
+const t=setInterval(()=>{
+  simpleCountdown.textContent=--c;
+  if(c===0){
+    clearInterval(t);
+    startBtn.classList.add('active');
+  }
+},1200);
+
+startBtn.onclick=()=>{
+  bgMusic.play();
+  countdownPage.style.display='none';
+  partyPage.style.display='flex';
+  fireworks(partyFireworks);   // 🎆 PARTY ONLY
+  setTimeout(()=>continueBtn.classList.add('active'),2000);
+};
+
+continueBtn.onclick=()=>{
+  partyPage.style.display='none';
+  journeyPage.style.display='flex';
+  startHearts();               // ❤️ JOURNEY ONLY
+  setTimeout(()=>journeyText.style.opacity=1,600);
+  setTimeout(()=>walkBtn.classList.add('active'),2500);
+};
+
+walkBtn.onclick=()=>{
+  stopHearts();
+  journeyPage.style.display='none';
+  birthdayPage.style.display='flex';
+  fireworks(birthdayFireworks); // 🎆 BIRTHDAY ONLY
+  setTimeout(()=>hb1.style.opacity=1,600);
+  setTimeout(()=>hb2.style.opacity=1,1400);
+  setTimeout(()=>birthdayNext.classList.add('active'),2600);
+};
+
+birthdayNext.onclick=()=>{
+  birthdayPage.style.display='none';
+  cakeSection.style.display='flex';
+};
+
+let cakeState=0;
+cakeActionBtn.onclick=()=>{
+  if(cakeState===0){
+    cakeImage.src='assets/images/cake-candle.jpg';
+    cakeImage.classList.add('candle-lit');
+    cakeActionBtn.textContent='Cut the Cake';
+    cakeState=1;
+  }else{
+    cakeSection.style.display='none';
+    memoriesPage.style.display='flex';
+    showMemory(0);
+  }
+};
+
+const slides=document.querySelectorAll('.memory-slide');
+let i=0;
+function showMemory(n){
+  slides.forEach(s=>s.style.display='none');
+  slides[n].style.display='flex';
+  setTimeout(()=>memoryNext.classList.add('active'),2000);
+}
+
+memoryNext.onclick=()=>{
+  i++;
+  i<slides.length?showMemory(i):(memoriesPage.style.display='none',creditsPage.style.display='flex');
+};
+
+/* 🎆 FIREWORKS FUNCTION */
+function fireworks(c){
+  const x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;
+  const p=[];
+  setInterval(()=>{
+    const a=Math.random()*c.width,b=Math.random()*c.height/2;
+    for(let i=0;i<80;i++)
+      p.push({x:a,y:b,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,l:100});
+  },700);
+  (function anim(){
+    x.clearRect(0,0,c.width,c.height);
+    p.forEach((e,i)=>{
+      e.x+=e.vx;e.y+=e.vy;e.l--;
+      x.fillStyle=`rgba(255,105,180,${e.l/100})`;
+      x.fillRect(e.x,e.y,2,2);
+      if(e.l<=0)p.splice(i,1);
+    });
+    requestAnimationFrame(anim);
+  })();
+}
+</script>
+
+</body>
+</html>
