@@ -21,16 +21,25 @@ body{
   transition:background 1.5s ease;
 }
 
+/* ✨ GLASSMORPHISM */
 .glass{
-  background:rgba(255,255,255,.12);
-  backdrop-filter:blur(28px);
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.05)
+  );
+  backdrop-filter:blur(30px);
+  -webkit-backdrop-filter:blur(30px);
   border-radius:36px;
   border:1px solid rgba(255,255,255,.35);
-  box-shadow:0 25px 60px rgba(255,100,200,.3);
+  box-shadow:
+    0 25px 60px rgba(255,100,200,.35),
+    inset 0 0 30px rgba(255,255,255,.1);
   padding:60px 90px;
   text-align:center;
   color:#fff;
   max-width:900px;
+  width:100%;
 }
 
 h1,h2{
@@ -55,8 +64,8 @@ button{
 }
 button:hover{transform:translateY(-3px)}
 
-.delayed{opacity:0;pointer-events:none;transform:translateY(20px);transition:1s}
-.delayed.active{opacity:1;pointer-events:auto;transform:none}
+.delayed{opacity:0;pointer-events:none;transition:1s}
+.delayed.active{opacity:1;pointer-events:auto}
 
 section{
   position:fixed;
@@ -68,18 +77,8 @@ section{
 
 canvas{position:absolute;inset:0;pointer-events:none}
 
-#journeyText{
-  font-size:52px;
-  opacity:0;
-  transform:scale(.6);
-  transition:2s;
-}
-
-.hbText{
-  font-size:54px;
-  opacity:0;
-  transition:1.5s;
-}
+#journeyText{font-size:52px;opacity:0;transition:2s}
+.hbText{font-size:54px;opacity:0;transition:1.5s}
 
 #cakeImage{
   width:320px;
@@ -94,7 +93,7 @@ canvas{position:absolute;inset:0;pointer-events:none}
   50%{box-shadow:0 0 80px #ffd1dc}
 }
 
-/* ❤️ Hearts only for Journey */
+/* ❤️ HEARTS */
 .heartParticle{
   position:absolute;
   bottom:-40px;
@@ -104,26 +103,42 @@ canvas{position:absolute;inset:0;pointer-events:none}
   pointer-events:none;
 }
 @keyframes float{
-  to{transform:translateY(-130vh) translateX(60px);opacity:0}
+  to{transform:translateY(-130vh);opacity:0}
 }
 
-.memory-slide{display:none;align-items:center;gap:50px}
-.memory-photo img{width:360px;border-radius:36px;box-shadow:0 25px 60px rgba(255,180,200,.5)}
-.memory-quote{font-size:40px;font-family:'Playfair Display',serif;line-height:1.4}
+/* MEMORIES */
+.memory-slide{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:50px;
+}
+.memory-photo img{
+  width:360px;
+  max-width:100%;
+  border-radius:30px;
+}
+.memory-quote{
+  font-size:40px;
+  font-family:'Playfair Display',serif;
+  line-height:1.4;
+  max-width:400px;
+}
 
 .blink-heart{font-size:75px;margin-top:20px;animation:blink 1.5s infinite}
 @keyframes blink{50%{opacity:.2}}
 
-/* 📱 MOBILE FIX */
+/* 📱 MOBILE */
 @media(max-width:600px){
-  .glass{width:92%;padding:32px 22px;border-radius:26px}
+  .glass{width:92%;padding:28px 20px;border-radius:24px}
   h1{font-size:26px}
   h2{font-size:22px}
-  #journeyText{font-size:28px}
-  .hbText{font-size:30px}
-  #cakeImage{width:220px}
-  .memory-quote{font-size:24px}
-  .memory-photo img{width:240px}
+  #journeyText{font-size:26px}
+  .hbText{font-size:28px}
+  #cakeImage{width:210px}
+  .memory-slide{flex-direction:column;gap:20px}
+  .memory-photo img{width:220px}
+  .memory-quote{font-size:22px}
 }
 </style>
 </head>
@@ -188,7 +203,7 @@ canvas{position:absolute;inset:0;pointer-events:none}
       <div class="memory-photo"><img src="assets/images/m1.jpg"></div>
     </div>
     <div class="memory-slide">
-      <div class="memory-quote">Thank you for supporting me even when i was distant.</div>
+      <div class="memory-quote">Thank you for supporting me even when I was distant.</div>
       <div class="memory-photo"><img src="assets/images/m2.jpg"></div>
     </div>
     <div class="memory-slide">
@@ -209,7 +224,7 @@ canvas{position:absolute;inset:0;pointer-events:none}
 <script>
 const $=id=>document.getElementById(id);
 
-const bgMusic=$('bgMusic');
+/* ELEMENTS */
 const lightsPage=$('lightsPage');
 const countdownPage=$('countdownPage');
 const partyPage=$('partyPage');
@@ -232,10 +247,10 @@ const journeyText=$('journeyText');
 const hb1=$('hb1');
 const hb2=$('hb2');
 const cakeImage=$('cakeImage');
+const bgMusic=$('bgMusic');
 
+/* ❤️ HEARTS */
 let heartInterval;
-
-/* ❤️ Hearts */
 function startHearts(){
   heartInterval=setInterval(()=>{
     const h=document.createElement('div');
@@ -248,16 +263,16 @@ function startHearts(){
 }
 function stopHearts(){clearInterval(heartInterval);}
 
-/* 🎆 Fireworks */
+/* 🎆 FIREWORKS */
 function fireworks(c){
   const x=c.getContext('2d');
   c.width=innerWidth;c.height=innerHeight;
   const p=[];
   setInterval(()=>{
     const a=Math.random()*c.width,b=Math.random()*c.height/2;
-    for(let i=0;i<80;i++)
+    for(let i=0;i<70;i++)
       p.push({x:a,y:b,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,l:100});
-  },700);
+  },800);
   (function anim(){
     x.clearRect(0,0,c.width,c.height);
     p.forEach((e,i)=>{
@@ -275,16 +290,20 @@ turnLightsBtn.onclick=()=>{
   document.body.style.background='linear-gradient(135deg,#1b0033,#3a0ca3,#7209b7,#b5179e,#f72585)';
   lightsPage.style.display='none';
   countdownPage.style.display='flex';
-};
 
-let c=3;
-const t=setInterval(()=>{
-  simpleCountdown.textContent=--c;
-  if(c===0){
-    clearInterval(t);
-    startBtn.classList.add('active');
-  }
-},1200);
+  /* ✅ FIXED COUNTDOWN */
+  let count=3;
+  simpleCountdown.textContent=count;
+
+  const timer=setInterval(()=>{
+    count--;
+    simpleCountdown.textContent=count;
+    if(count===1){
+      clearInterval(timer);
+      startBtn.classList.add('active');
+    }
+  },1200);
+};
 
 startBtn.onclick=()=>{
   bgMusic.play();
@@ -299,7 +318,7 @@ continueBtn.onclick=()=>{
   journeyPage.style.display='flex';
   startHearts();
   setTimeout(()=>journeyText.style.opacity=1,600);
-  setTimeout(()=>walkBtn.classList.add('active'),2500);
+  setTimeout(()=>walkBtn.classList.add('active'),2000);
 };
 
 walkBtn.onclick=()=>{
@@ -308,8 +327,8 @@ walkBtn.onclick=()=>{
   birthdayPage.style.display='flex';
   fireworks(birthdayFireworks);
   setTimeout(()=>hb1.style.opacity=1,600);
-  setTimeout(()=>hb2.style.opacity=1,1400);
-  setTimeout(()=>birthdayNext.classList.add('active'),2600);
+  setTimeout(()=>hb2.style.opacity=1,1200);
+  setTimeout(()=>birthdayNext.classList.add('active'),2400);
 };
 
 birthdayNext.onclick=()=>{
@@ -332,16 +351,16 @@ cakeActionBtn.onclick=()=>{
 };
 
 const slides=document.querySelectorAll('.memory-slide');
-let i=0;
+let idx=0;
 function showMemory(n){
   slides.forEach(s=>s.style.display='none');
   slides[n].style.display='flex';
-  setTimeout(()=>memoryNext.classList.add('active'),2000);
+  setTimeout(()=>memoryNext.classList.add('active'),1500);
 }
 
 memoryNext.onclick=()=>{
-  i++;
-  i<slides.length?showMemory(i):(memoriesPage.style.display='none',creditsPage.style.display='flex');
+  idx++;
+  idx<slides.length?showMemory(idx):(memoriesPage.style.display='none',creditsPage.style.display='flex');
 };
 </script>
 
