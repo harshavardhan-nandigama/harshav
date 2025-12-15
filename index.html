@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Journey 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -40,7 +41,7 @@ h1,h2{
 
 button{
   padding:14px 36px;
-  margin-top:24px;
+  margin-top:26px;
   border:none;
   border-radius:50px;
   font-size:16px;
@@ -93,7 +94,7 @@ canvas{position:absolute;inset:0;pointer-events:none}
   50%{box-shadow:0 0 80px #ffd1dc}
 }
 
-/* ❤️ Hearts ONLY for journey page */
+/* ❤️ Hearts only for Journey */
 .heartParticle{
   position:absolute;
   bottom:-40px;
@@ -113,9 +114,16 @@ canvas{position:absolute;inset:0;pointer-events:none}
 .blink-heart{font-size:75px;margin-top:20px;animation:blink 1.5s infinite}
 @keyframes blink{50%{opacity:.2}}
 
-@media(max-width:900px){
-  .glass{padding:40px}
-  .memory-slide{flex-direction:column;text-align:center}
+/* 📱 MOBILE FIX */
+@media(max-width:600px){
+  .glass{width:92%;padding:32px 22px;border-radius:26px}
+  h1{font-size:26px}
+  h2{font-size:22px}
+  #journeyText{font-size:28px}
+  .hbText{font-size:30px}
+  #cakeImage{width:220px}
+  .memory-quote{font-size:24px}
+  .memory-photo img{width:240px}
 }
 </style>
 </head>
@@ -126,7 +134,6 @@ canvas{position:absolute;inset:0;pointer-events:none}
   <source src="assets/music/track2-piano.mp3" type="audio/mpeg">
 </audio>
 
-<!-- LIGHTS -->
 <section id="lightsPage" style="display:flex">
   <div class="glass">
     <h1>hey, Vahi</h1>
@@ -134,16 +141,14 @@ canvas{position:absolute;inset:0;pointer-events:none}
   </div>
 </section>
 
-<!-- COUNTDOWN -->
 <section id="countdownPage">
   <div class="glass">
     <h1>Something Magical Awaits 💖</h1>
-    <div id="simpleCountdown" style="font-size:100px;margin:30px">4</div>
+    <div id="simpleCountdown" style="font-size:100px;margin:30px">3</div>
     <button id="startBtn" class="delayed">Let's play music</button>
   </div>
 </section>
 
-<!-- PARTY (🎆 FIREWORKS ONLY HERE) -->
 <section id="partyPage">
   <canvas id="partyFireworks"></canvas>
   <div class="glass">
@@ -152,7 +157,6 @@ canvas{position:absolute;inset:0;pointer-events:none}
   </div>
 </section>
 
-<!-- JOURNEY (❤️ HEARTS ONLY HERE) -->
 <section id="journeyPage">
   <div class="glass">
     <h1 id="journeyText">With Love, Care & Endless Smiles ❤️</h1>
@@ -160,17 +164,15 @@ canvas{position:absolute;inset:0;pointer-events:none}
   </div>
 </section>
 
-<!-- BIRTHDAY (🎆 FIREWORKS ONLY HERE) -->
 <section id="birthdayPage">
   <canvas id="birthdayFireworks"></canvas>
   <div class="glass">
     <h1 id="hb1" class="hbText">Happy Birthday My dear</h1>
-    <h2 id="hb2" class="hbText"> Vahi ❤️</h2>
+    <h2 id="hb2" class="hbText">Vahi ❤️</h2>
     <button id="birthdayNext" class="delayed">Let's celebrate →</button>
   </div>
 </section>
 
-<!-- CAKE -->
 <section id="cakeSection">
   <div class="glass">
     <h1>Make a Wish</h1>
@@ -179,7 +181,6 @@ canvas{position:absolute;inset:0;pointer-events:none}
   </div>
 </section>
 
-<!-- MEMORIES -->
 <section id="memoriesPage">
   <div class="glass">
     <div class="memory-slide">
@@ -198,7 +199,6 @@ canvas{position:absolute;inset:0;pointer-events:none}
   </div>
 </section>
 
-<!-- CREDITS -->
 <section id="creditsPage">
   <div class="glass">
     <h1>Forever Yours</h1>
@@ -210,9 +210,32 @@ canvas{position:absolute;inset:0;pointer-events:none}
 const $=id=>document.getElementById(id);
 
 const bgMusic=$('bgMusic');
+const lightsPage=$('lightsPage');
+const countdownPage=$('countdownPage');
+const partyPage=$('partyPage');
+const journeyPage=$('journeyPage');
+const birthdayPage=$('birthdayPage');
+const cakeSection=$('cakeSection');
+const memoriesPage=$('memoriesPage');
+const creditsPage=$('creditsPage');
 
-/* ❤️ HEARTS ONLY FOR JOURNEY PAGE */
+const turnLightsBtn=$('turnLightsBtn');
+const startBtn=$('startBtn');
+const continueBtn=$('continueBtn');
+const walkBtn=$('walkBtn');
+const birthdayNext=$('birthdayNext');
+const cakeActionBtn=$('cakeActionBtn');
+const memoryNext=$('memoryNext');
+
+const simpleCountdown=$('simpleCountdown');
+const journeyText=$('journeyText');
+const hb1=$('hb1');
+const hb2=$('hb2');
+const cakeImage=$('cakeImage');
+
 let heartInterval;
+
+/* ❤️ Hearts */
 function startHearts(){
   heartInterval=setInterval(()=>{
     const h=document.createElement('div');
@@ -223,10 +246,31 @@ function startHearts(){
     setTimeout(()=>h.remove(),12000);
   },700);
 }
-function stopHearts(){
-  clearInterval(heartInterval);
+function stopHearts(){clearInterval(heartInterval);}
+
+/* 🎆 Fireworks */
+function fireworks(c){
+  const x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;
+  const p=[];
+  setInterval(()=>{
+    const a=Math.random()*c.width,b=Math.random()*c.height/2;
+    for(let i=0;i<80;i++)
+      p.push({x:a,y:b,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,l:100});
+  },700);
+  (function anim(){
+    x.clearRect(0,0,c.width,c.height);
+    p.forEach((e,i)=>{
+      e.x+=e.vx;e.y+=e.vy;e.l--;
+      x.fillStyle=`rgba(255,105,180,${e.l/100})`;
+      x.fillRect(e.x,e.y,2,2);
+      if(e.l<=0)p.splice(i,1);
+    });
+    requestAnimationFrame(anim);
+  })();
 }
 
+/* FLOW */
 turnLightsBtn.onclick=()=>{
   document.body.style.background='linear-gradient(135deg,#1b0033,#3a0ca3,#7209b7,#b5179e,#f72585)';
   lightsPage.style.display='none';
@@ -246,14 +290,14 @@ startBtn.onclick=()=>{
   bgMusic.play();
   countdownPage.style.display='none';
   partyPage.style.display='flex';
-  fireworks(partyFireworks);   // 🎆 PARTY ONLY
+  fireworks(partyFireworks);
   setTimeout(()=>continueBtn.classList.add('active'),2000);
 };
 
 continueBtn.onclick=()=>{
   partyPage.style.display='none';
   journeyPage.style.display='flex';
-  startHearts();               // ❤️ JOURNEY ONLY
+  startHearts();
   setTimeout(()=>journeyText.style.opacity=1,600);
   setTimeout(()=>walkBtn.classList.add('active'),2500);
 };
@@ -262,7 +306,7 @@ walkBtn.onclick=()=>{
   stopHearts();
   journeyPage.style.display='none';
   birthdayPage.style.display='flex';
-  fireworks(birthdayFireworks); // 🎆 BIRTHDAY ONLY
+  fireworks(birthdayFireworks);
   setTimeout(()=>hb1.style.opacity=1,600);
   setTimeout(()=>hb2.style.opacity=1,1400);
   setTimeout(()=>birthdayNext.classList.add('active'),2600);
@@ -299,28 +343,6 @@ memoryNext.onclick=()=>{
   i++;
   i<slides.length?showMemory(i):(memoriesPage.style.display='none',creditsPage.style.display='flex');
 };
-
-/* 🎆 FIREWORKS FUNCTION */
-function fireworks(c){
-  const x=c.getContext('2d');
-  c.width=innerWidth;c.height=innerHeight;
-  const p=[];
-  setInterval(()=>{
-    const a=Math.random()*c.width,b=Math.random()*c.height/2;
-    for(let i=0;i<80;i++)
-      p.push({x:a,y:b,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,l:100});
-  },700);
-  (function anim(){
-    x.clearRect(0,0,c.width,c.height);
-    p.forEach((e,i)=>{
-      e.x+=e.vx;e.y+=e.vy;e.l--;
-      x.fillStyle=`rgba(255,105,180,${e.l/100})`;
-      x.fillRect(e.x,e.y,2,2);
-      if(e.l<=0)p.splice(i,1);
-    });
-    requestAnimationFrame(anim);
-  })();
-}
 </script>
 
 </body>
